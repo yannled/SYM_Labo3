@@ -1,0 +1,20 @@
+<?xml version ="1.0" encoding ="utf-8"?><!--  Learn More about how to use App Actions: https://developer.android.com/guide/actions/index.html -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/capteur_menu"
+        app:showAsAction="never"
+        android:title="@string/title_activity_capteur" />
+    <item
+        android:id="@+id/code_bar_menu"
+        app:showAsAction="never"
+        android:title="@string/title_activity_code_bar" />
+    <item
+        android:id="@+id/ibeacon_menu"
+        app:showAsAction="never"
+        android:title="@string/title_activity_ibeacon" />
+    <item
+        android:id="@+id/nfc_menu"
+        app:showAsAction="never"
+        android:title="@string/title_activity_nfc" />
+</menu>

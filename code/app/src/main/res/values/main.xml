@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_capteur">capteur</string>
+    <string name="title_activity_code_bar">Code bar</string>
+    <string name="title_activity_ibeacon">ibeacon</string>
+    <string name="title_activity_nfc">NFC</string>
+    <string name="good">newActivity OK</string>
+</resources>
