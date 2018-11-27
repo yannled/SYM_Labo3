@@ -11,8 +11,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <Button
             android:id="@+id/scan_start"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="148dp"
+            android:layout_marginBottom="110dp"
             android:text="@string/scan_button"
             tools:layout_editor_absoluteX="135dp"
             tools:layout_editor_absoluteY="347dp" />
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="194dp"
+            android:layout_marginTop="119dp"
             android:text="@string/default_scan_value"
             android:textSize="32sp"
             tools:layout_editor_absoluteX="135dp"
