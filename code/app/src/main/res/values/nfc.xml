@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="label_username">Username</string>
+    <string name="label_password">Username</string>
+    <string name="label_button_connect">Connect</string>
+    <string name="username_empty">ERROR : Username cannot be empty</string>
+    <string name="password_empty">ERROR : Password cannot be empty</string>
+    <string name="username_password_false">ERROR : Username or Password false</string>
+    <string name="authentification_ok">Great, you are connected</string>
+    <string name="error_NFC">This device doesn t support NFC.</string>
+    <string name="disabled_NFC">NFC is disabled.</string>
 </resources>
