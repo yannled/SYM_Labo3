@@ -25,7 +25,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,7 +33,24 @@
             android:label="@string/title_activity_capteur" />
         <activity
             android:name=".nfc"
-            android:label="@string/title_activity_nfc" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_nfc">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
+
+        </activity>
+
         <activity
             android:name=".code_bar"
             android:label="@string/title_activity_code_bar"
@@ -43,6 +59,11 @@
         <activity
             android:name=".ibeacon"
             android:label="@string/title_activity_ibeacon" />
+
+        <activity
+            android:name=".nfcChild"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_nfc" />
 
         <meta-data
             android:name="com.google.android.actions"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_username">Username</string>
-    <string name="label_password">Username</string>
+    <string name="label_password">Password</string>
     <string name="label_button_connect">Connect</string>
     <string name="username_empty">ERROR : Username cannot be empty</string>
     <string name="password_empty">ERROR : Password cannot be empty</string>
@@ -9,4 +9,12 @@
     <string name="authentification_ok">Great, you are connected</string>
     <string name="error_NFC">This device doesn t support NFC.</string>
     <string name="disabled_NFC">NFC is disabled.</string>
+    <string name="nfc_no_tag">no tag</string>
+    <string name="nfc_tag">tag Accept</string>
+    <string name="maxSecurity">Max Security</string>
+    <string name="mediumSecurity">Medium Security</string>
+    <string name="minSecurity">Min Security</string>
+    <string name="erroAuthentification">Wrong password or username, try toto : 1234</string>
+    <string name="access">Congratulation you have access !!!</string>
+    <string name="noAccess">Sorry it is to late !!!</string>
 </resources>
