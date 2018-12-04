@@ -17,9 +17,7 @@ public class code_bar extends Activity {
     private Button scan_start;
     private TextView scanned_value;
 
-    private static final String SELECTED_ITEM_POSITION = "ItemPosition";
-    private int mPosition;
-
+    private static final String SCANNED_VALUE = "scanned_value";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,7 @@ public class code_bar extends Activity {
         super.onSaveInstanceState(outState);
 
         // Save the state of item position
-        outState.putInt(SELECTED_ITEM_POSITION, mPosition);
+        outState.putString(SCANNED_VALUE, scanned_value.getText().toString());
     }
 
     @Override
@@ -50,7 +48,7 @@ public class code_bar extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
 
         // Read the state of item position
-        mPosition = savedInstanceState.getInt(SELECTED_ITEM_POSITION);
+        scanned_value.setText(savedInstanceState.getString(SCANNED_VALUE, getString(R.string.default_scan_value)));
     }
 
     protected void startScann(){

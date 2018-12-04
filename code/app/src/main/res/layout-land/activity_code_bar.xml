@@ -32,6 +32,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="119dp"
+            android:gravity="center"
             android:text="@string/default_scan_value"
             android:textSize="32sp"
             tools:layout_editor_absoluteX="135dp"
