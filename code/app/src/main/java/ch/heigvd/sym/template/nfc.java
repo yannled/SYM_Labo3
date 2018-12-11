@@ -4,125 +4,196 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.nfc.NfcAdapter;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.content.ContentValues.TAG;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Date;
 
-public class nfc extends Activity {
+//Source : https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
+public class nfc extends Activity implements nfcMethod{
 
+    public static final String MIME_TEXT_PLAIN = "text/plain";
+    public static final String TAG = "NfcDemo";
+
+    private TextView mTextView;
+    private NfcAdapter mNfcAdapter;
     private EditText username;
     private EditText password;
-    private Button connect;
-    private NfcAdapter mNfcAdapter;
-
-    private static final String USERNAME = "toto";
-    private static final String PASSWORD = "1234";
+    private Button buttonConnect;
+    private ProgressBar progressBarNFC;
+    private Long tagTime = null;
+    private CountDownTimer countDownTime;
+    private NdefReaderTask nfctask;
+    private int total = 0;
+    private static final long MAX_MINUTES = 1000 * 60 * 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
+        nfctask = new NdefReaderTask(this);
+
+        mTextView = findViewById(R.id.nfcvalue);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        connect = findViewById(R.id.buttonConnect);
-
+        buttonConnect = findViewById(R.id.buttonConnect);
+        progressBarNFC = findViewById(R.id.progressBarNFC);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
         if (mNfcAdapter == null) {
             // Stop here, we definitely need NFC
-            Toast.makeText(this, getResources().getString(R.string.error_NFC), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
             finish();
             return;
+
         }
+
         if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(nfc.this, getResources().getString(R.string.disabled_NFC), Toast.LENGTH_LONG).show();
+            mTextView.setText("NFC is disabled.");
         }
 
         handleIntent(getIntent());
 
-        connect.setOnClickListener(new View.OnClickListener() {
-            @Override
+        buttonConnect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String result = VerifAuthentification();
-                switch (result){
-                    case "USERNAME_EMPTY":
-                        Toast.makeText(nfc.this, getResources().getString(R.string.username_empty), Toast.LENGTH_LONG).show();
-                        break;
-                    case "PASSWORD_EMPTY":
-                        Toast.makeText(nfc.this, getResources().getString(R.string.password_empty), Toast.LENGTH_LONG).show();
-                        break;
-                    case "USERNAME_PASSWORD_FALSE":
-                        Toast.makeText(nfc.this, getResources().getString(R.string.username_password_false), Toast.LENGTH_LONG).show();
-                        break;
-                    case "OK":
-                        Toast.makeText(nfc.this, getResources().getString(R.string.authentification_ok), Toast.LENGTH_LONG).show();
-                        break;
+                if(username.getText().toString().equals("toto") && password.getText().toString().equals("1234")){
+
+                    if(tagTime == null)
+                        Toast.makeText(nfc.this, "You need to tag NFC to be authentified", Toast.LENGTH_LONG).show();
+                    else {
+                        long now = new Date().getTime();
+                        long differ = (now - tagTime);
+
+                        if (differ <= MAX_MINUTES) {
+                            Toast.makeText(nfc.this, "Your are authentified", Toast.LENGTH_LONG).show();
+                            Intent childIntent = new Intent(nfc.this, nfcChild.class);
+                            childIntent.putExtra("time", tagTime);
+                            startActivity(childIntent);
+                        }
+                        else{
+                            Toast.makeText(nfc.this, "To late, sorry.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                else
+                {
+                    mTextView.setText(R.string.erroAuthentification);
                 }
             }
         });
+
+        countDownTime = new CountDownTimer(MAX_MINUTES, 1000) {
+            public void onTick(long millisUntilFinished) {
+                    //forward progress
+                    long finishedSeconds = MAX_MINUTES - millisUntilFinished;
+                    total = (int) (((float) finishedSeconds / (float) MAX_MINUTES) * 100.0);
+                    progressBarNFC.setProgress(100-total);
+            }
+
+            public void onFinish() {
+                // DO something when 1 minute is up
+            }
+        };
     }
 
     @Override
-    public void onResume(){
+    protected void onResume() {
         super.onResume();
-        setupForegroundDispatch();
 
+        setupForegroundDispatch(this, mNfcAdapter);
     }
 
     @Override
-    public void onPause(){
+    protected void onPause() {
+        stopForegroundDispatch(this, mNfcAdapter);
+
         super.onPause();
-        stopForegroundDispatch();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        handleIntent(intent);
     }
 
     private void handleIntent(Intent intent) {
-        // TODO: handle Intent
+        String action = intent.getAction();
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+
+            String type = intent.getType();
+            if (MIME_TEXT_PLAIN.equals(type)) {
+
+                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                nfctask.execute(tag);
+
+            } else {
+                Log.d(TAG, "Wrong mime type: " + type);
+            }
+        } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+
+            // In case we would still use the Tech Discovered Intent
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            String[] techList = tag.getTechList();
+            String searchedTech = Ndef.class.getName();
+
+            for (String tech : techList) {
+                if (searchedTech.equals(tech)) {
+                    nfctask.execute(tag);
+                    break;
+                }
+            }
+        }
     }
 
-    private void setupForegroundDispatch() {
-        if(mNfcAdapter == null)
-            return;
-        final Intent intent = new Intent(this.getApplicationContext(),
-                this.getClass());
+    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        final PendingIntent pendingIntent =
-                PendingIntent.getActivity(this.getApplicationContext(), 0, intent, 0);
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
         IntentFilter[] filters = new IntentFilter[1];
         String[][] techList = new String[][]{};
-// Notice that this is the same filter as in our manifest.
+
+        // Notice that this is the same filter as in our manifest.
         filters[0] = new IntentFilter();
         filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
         filters[0].addCategory(Intent.CATEGORY_DEFAULT);
         try {
-            filters[0].addDataType("text/plain");
+            filters[0].addDataType(MIME_TEXT_PLAIN);
         } catch (IntentFilter.MalformedMimeTypeException e) {
-            Log.e(TAG, "MalformedMimeTypeException", e);
+            throw new RuntimeException("Check your mime type.");
         }
-        mNfcAdapter.enableForegroundDispatch(this, pendingIntent, filters, techList);
+
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
     }
 
-    private void stopForegroundDispatch() {
-        if(mNfcAdapter != null)
-            mNfcAdapter.disableForegroundDispatch(this);
+
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
     }
 
-    private String VerifAuthentification(){
-        if(username.getText().toString().equals(""))
-            return "USERNAME_EMPTY";
-        if(password.getText().toString().equals(""))
-            return "PASSWORD_EMPTY";
-        if(username.getText().toString().equals(USERNAME) && password.getText().toString().equals(PASSWORD)) {
-            return "OK";
-        }
-        else {
-            return "USERNAME_PASSWORD_FALSE";
-        }
+    @Override
+    public void doAfterNfcEnable() {
+        tagTime = new Date().getTime();
+        countDownTime.start();
     }
 }
