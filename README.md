@@ -21,7 +21,36 @@ Pour ce qui est de l'utilisation du NFC avec android et IOS :
 
    
 
+### Capteur
 
+*vous constaterez que les animations de la flèche ne sont pas* *fluides, il va y avoir un tremblement plus ou moins important même si le téléphone ne bouge pas.*
+*Veuillez expliquer quelle est la cause la plus probable de ce tremblement et donner une manière *
+
+Deux causes possibles, dépendantes de l'interprétation du sens du tremblement: 
+
+* tremblement dû aux informations du capteur pas assez précises, le capteur transmettant des changements de 
+  position minimes qui n'existent soit pas (phantom movements), soit parce que le téléphone bouge effectivement mais d'une façon imperceptible. 
+  **Solution**: 
+
+  application d'un filtre passe-bas sur les données du capteur, ayant pour agréable conséquence d'ignorer toutes valeurs exotiques. exemple : 
+
+  ```java
+  protected float[] lowPass( float[] input, float[] output ) {
+      if ( output == null ) return input;     
+      for ( int i=0; i<input.length; i++ ) {
+          output[i] = output[i] + ALPHA * (input[i] - output[i]);
+      }
+      return output;
+  }
+  ```
+
+  https://www.built.io/blog/applying-low-pass-filter-to-android-sensor-s-readings
+
+* tremblement dû au dessin de la flèche : comme on détruit l'image avant même de calculer la nouvelle,  on peut avoir 
+  une impression de tremblement. 
+  **Solution**: 
+
+  gérer différement l'affichage entre chaque image : soit techniquement dans la fonction de drawing (check par rapport au framerate, ..), soit définir un delta maximum entre deux matrices de rotation (par exemple l'angle entre deux vecteurs unités transformé par nos matrices respectivement) et calculer une nouvelle matrice de rotation correspondant à ce delta maximum, puis afficher la flèche en fonction.  
 
 
 
