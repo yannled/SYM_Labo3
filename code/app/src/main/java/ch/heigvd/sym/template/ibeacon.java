@@ -71,8 +71,9 @@ public class ibeacon extends Activity implements BeaconConsumer {
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                ibeaconList.clear();
+
                 if (beacons.size() > 0) {
-                    ibeaconList.clear();
                     for(Beacon beacon : beacons){
                         ibeaconList.add("UUID: " + beacon.getId1()
                                 + "\nMAJOR: " + beacon.getId2()
@@ -82,11 +83,12 @@ public class ibeacon extends Activity implements BeaconConsumer {
                                 + "\nDISTANCE: " + beacon.getDistance());
                     }
 
-                    adapter.notifyDataSetChanged();
                 }
                 else{
-                    ibeaconList.add("Aucun iBeacon détecté");
+                    ibeaconList.add("No iBeacon in this Omlette !");
                 }
+                adapter.notifyDataSetChanged();
+
             }
         });
 
