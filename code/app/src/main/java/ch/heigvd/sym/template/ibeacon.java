@@ -84,6 +84,9 @@ public class ibeacon extends Activity implements BeaconConsumer {
 
                     adapter.notifyDataSetChanged();
                 }
+                else{
+                    ibeaconList.add("Aucun iBeacon détecté");
+                }
             }
         });
 
