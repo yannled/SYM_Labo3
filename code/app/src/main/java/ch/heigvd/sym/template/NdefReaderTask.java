@@ -13,6 +13,9 @@ import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * Autheur: Yann Lederrey, Joel Schar, Yohann Meyer
+ */
 
 public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
     private nfcMethod nfcActivity;

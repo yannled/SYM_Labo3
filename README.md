@@ -1,4 +1,7 @@
 # SYM_Labo3
+
+**Yann Lederrey, Joel Schar, Yohann Meyer**
+
 ### NFC
 
 *les tags NFC utilisés contiennent 4 valeurs textuelles codées en UTF-8

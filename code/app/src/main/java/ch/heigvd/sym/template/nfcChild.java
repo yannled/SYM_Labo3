@@ -27,6 +27,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * Autheur: Yann Lederrey, Joel Schar, Yohann Meyer
+ */
+
 //Source : https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
 public class nfcChild extends Activity implements nfcMethod{
 

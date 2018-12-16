@@ -12,6 +12,10 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+/**
+ * Autheur: Yann Lederrey, Joel Schar, Yohann Meyer
+ */
+
 public class code_bar extends Activity {
 
     private Button scan_start;

@@ -29,6 +29,9 @@ import java.util.List;
 import static android.support.constraint.Constraints.TAG;
 
 // authorisation request :https://developer.android.com/training/permissions/requesting#java
+/**
+ * Autheur: Yann Lederrey, Joel Schar, Yohann Meyer
+ */
 
 public class ibeacon extends Activity implements BeaconConsumer {
 

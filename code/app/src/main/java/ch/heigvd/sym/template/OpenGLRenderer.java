@@ -17,6 +17,9 @@ import ch.heigvd.sym.template.objects.ObjLoader;
 /**
  * Class used to render the 3d compass
  */
+/**
+ * Autheur: Yann Lederrey, Joel Schar, Yohann Meyer
+ */
 public class OpenGLRenderer implements Renderer {
 
     private static final String TAG = OpenGLRenderer.class.getSimpleName();

@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * Autheur: Yann Lederrey, Joel Schar, Yohann Meyer
+ */
+
 public class capteur extends Activity implements SensorEventListener {
 
     //opengl
