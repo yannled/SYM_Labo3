@@ -21,7 +21,45 @@ Pour ce qui est de l'utilisation du NFC avec android et IOS :
 
    
 
-### Capteur
+### Codes-barres
+
+*Comparer la technologie à codes-barres et la technologie NFC, du point de vue d'une utilisation dans
+des applications pour smartphones, dans une optique :*
+
+- *Professionnelle (Authentification, droits d’accès, stockage d’une clé)*
+- *Grand public (Billetterie, contrôle d’accès, e-paiement)*
+- *Ludique (Preuves d'achat, publicité, etc.)*
+- *Financier (Coûts pour le déploiement de la technologie, possibilités de recyclage, etc.)*
+
+Le code barre permet de stocker de l'information plus largement que la technologie NFC. En effet il ne permet pas simplement de contenir un identifiant comme le fait NFC, mais permet d'y encoder plus d'information. Le code barre sous forme de QRCode peut contenir beaucoup d'information comme du texte ou des urls.
+
+Le code-barre est très pratique pour accélérer le temps de lecture d'une information en effet sont modèle d'encodage pouvant être lu facilement et sans erreur par une machine évite de faire l'entrée manuellement par une personne. Ce système est donc adapté dans des cas quand l'information doit être lue rapidement ou qu'elle est fastidieuse à introduire. Comme par exemple les numéros d'articles ou des liens spécifiques vers des pages web.
+
+L'information encodée ne doit cependant pas être confidentielle ou doit pouvoir être gardée secrète. Les codes barres peuvent facilement être copié, dupliqué ou fabriqué. Ce procédé n'est donc pas adapté pour faire de l'authentification. Par exemple pour un badge d'entreprise qui permet de déverrouiller un ordinateur avec un second facteur ou d'ouvrir une porte la technologie NFC offre une sécurité accrue au code barre avec une protection contre la copie.
+
+Dans une domaine public ou la ressource est moins valorisée on voit l'utilisation du code barre plus répandue. En effet pour identifier un compte bancaire, au lieu d'entrer le numéro à la main on peut utiliser un code barre pour accélérer la saisie, mais ne devrait pas être utiliser pour s'identifier auprès de la banque. Pour tout ce qui est des billets d'entrée ce procédé permet de valider qu'un billet n'est pas utilisé plusieurs fois. Il est alors à la charge de l'acheteur de s'assurer que sont billet n'est pas copié. Dans tous les cas le billet sera utilisé qu'une fois. Cela reste cependant moins critique qu'une carte d'accès qui est utilisé souvent et pour faire l'accès à une ressource critique, comme un bâtiment.
+
+Pour tout ce qui est de la distribution d'information comme la publicité, le code barre est très adapté car cette information est publique et ce nécessite donc aucune protection spécifique.
+
+Le coût que représente la production d'un code barre est pratiquement nulle et accessible à tout le monde. Il ne nécessite rien de plus qu'un moyen d'afficher l'information. Un écran ou une feuille de papier sont suffisant. Il est relativement compliqué de recyclé un code barre vu que celui-ci contient une information exacte. Il est plus judicieux de régénérer un nouveau code avec l'information nécessaire. Le NFC quand à lui pourra être recyclé facilement en associant l'id à une nouvelle ressource.
+
+### iBeacon
+
+*Les iBeacons sont très souvent présentés comme une alternative à NFC. Pouvez-vous commenter cette*
+*affirmation en vous basant sur 2-3 exemples de cas d’utilisations (use-cases) concrets (par exemple e-*
+*paiement, second facteur d’identification, accéder aux horaires à un arrêt de bus, etc.).*
+
+Les deux technologies sont similaire sur leur manière de s'authentifier. En effet les deux utilisent un ID unique permettant de les identifier. Cependant leurs cas d'utilisation est sensiblement différent. La technologie NFC se base sur la proximité de lecture alors que le iBeacon permet l'authentification dans une zone plus large. 
+
+Le NFC offre l'avantage de la détection de proximité. Cela lui permet d'identifier de manière unique un utilisateur seulement s'il présente sa carte. Si celle-ci est tenue à l'écart du lecteur il est impossible d'en effectuer la lecture. Cette propriété offre une sécurité relativement convenable. Il est également possible de protéger les puces contre la copie ce qui en font un très bon token d'identification.
+Cette technologie est donc appropriée pour des cas d'utilisation qui nécessitent de la sécurité comme les moyen de payement ou d'authentification de personne. Par exemple dans les cartes bancaire ou les badges d'entreprise permettant d'ouvrir des portes.
+
+Le iBeacon est quant à lui détectable à une certaine distance et nécessite une alimentation. Cette technologie est plus propice pour l'identification d'un lieu ou d'une zone spécifique. Il n'est pas nécessaire d'être en contact direct avec le terminal. Il n'est donc pas possible de savoir de manière sûre quel iBeacon est sélectionné. Il est cependant possible de savoir environs à quel distance la borne se trouve du terminal et donc d'estimer lequel choisir. 
+Cette technologie est appropriée pour localiser la position du terminal. En fonction de la pièce dans laquelle se trouve le terminal on peut définir un comportement spécifique. Par exemple de définir des endroit de confiance et ne pas demander le mot de passe tant que le iBeacon est détecté. Ou bien de sélectionner directement un arrêt de bus si le terminal se trouve dans la zone de l'arrêt en question.
+
+L'utilisation des deux technologies s'applique donc à des situations différentes en fonction des besoins. Je ne pense donc pas qu'il soit possible de dire que le iBeacon est une solution qui pourrait remplacer le NFC mais qui apporte des possibilités complémentaires.
+
+### lCapteur
 
 *vous constaterez que les animations de la flèche ne sont pas* *fluides, il va y avoir un tremblement plus ou moins important même si le téléphone ne bouge pas.*
 *Veuillez expliquer quelle est la cause la plus probable de ce tremblement et donner une manière *
