@@ -33,7 +33,7 @@ des applications pour smartphones, dans une optique :*
 
 Le code barre permet de stocker de l'information plus largement que la technologie NFC. En effet il ne permet pas simplement de contenir un identifiant comme le fait NFC, mais permet d'y encoder plus d'information. Le code barre sous forme de QRCode peut contenir beaucoup d'information comme du texte ou des urls.
 
-Le code-barre est très pratique pour accélérer le temps de lecture d'une information en effet sont modèle d'encodage pouvant être lu facilement et sans erreur par une machine évite de faire l'entrée manuellement par une personne. Ce système est donc adapté dans des cas quand l'information doit être lue rapidement ou qu'elle est fastidieuse à introduire. Comme par exemple les numéros d'articles ou des liens spécifiques vers des pages web.
+Le code-barre est très pratique pour accélérer le temps de lecture d'une information en effet sont modèle d'encodage pouvant être lu facilement et sans erreur par une machine évite de faire l'entrée manuellement par une personne. Ce système est donc adapté dans des cas où l'information doit être lue rapidement ou qu'elle est fastidieuse à introduire. Comme par exemple les numéros d'articles ou des liens spécifiques vers des pages web.
 
 L'information encodée ne doit cependant pas être confidentielle ou doit pouvoir être gardée secrète. Les codes barres peuvent facilement être copié, dupliqué ou fabriqué. Ce procédé n'est donc pas adapté pour faire de l'authentification. Par exemple pour un badge d'entreprise qui permet de déverrouiller un ordinateur avec un second facteur ou d'ouvrir une porte la technologie NFC offre une sécurité accrue au code barre avec une protection contre la copie.
 
@@ -62,12 +62,11 @@ L'utilisation des deux technologies s'applique donc à des situations différent
 ### lCapteur
 
 *vous constaterez que les animations de la flèche ne sont pas* *fluides, il va y avoir un tremblement plus ou moins important même si le téléphone ne bouge pas.*
-*Veuillez expliquer quelle est la cause la plus probable de ce tremblement et donner une manière *
+*Veuillez expliquer quelle est la cause la plus probable de ce tremblement et donner une manière d'y remédier*
 
 Deux causes possibles, dépendantes de l'interprétation du sens du tremblement: 
 
-* tremblement dû aux informations du capteur pas assez précises, le capteur transmettant des changements de 
-  position minimes qui n'existent soit pas (phantom movements), soit parce que le téléphone bouge effectivement mais d'une façon imperceptible. 
+* tremblement dû aux informations du capteur pas assez précises, le capteur transmettant des changements de position minimes qui n'existent soit pas (phantom movements), soit parce que le téléphone bouge effectivement mais d'une façon imperceptible. 
   **Solution**: 
 
   application d'un filtre passe-bas sur les données du capteur, ayant pour agréable conséquence d'ignorer toutes valeurs exotiques. exemple : 
